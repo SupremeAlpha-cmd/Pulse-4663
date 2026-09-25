@@ -18,6 +18,18 @@ const state = {
 
 let chartInstance = null;
 
+// Human-friendly relative timestamps ("Just now" -> "2m ago" -> "1h ago")
+function formatAgo(ts) {
+  const s = Math.floor((Date.now() - ts) / 1000);
+  if (s < 60) return 'Just now';
+  const m = Math.floor(s / 60);
+  if (m < 60) return `${m}m ago`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h ago`;
+  return `${Math.floor(h / 24)}d ago`;
+}
+const displayTime = (item) => (item.ts ? formatAgo(item.ts) : item.time);
+
 // Initialize on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
   initChart();
@@ -156,6 +168,7 @@ function renderPulseFeed() {
           </div>
         </div>
         <div class="pulse-kind-tag kind-${post.kind}">${post.kind}</div>
+        <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); white-space: nowrap;">${displayTime(post)}</span>
       </div>
       <p class="pulse-text">${post.text}</p>
       ${post.txHash ? `
@@ -191,7 +204,7 @@ function renderCrossingTape() {
         <span class="tape-token-sub">${trade.amount} $${trade.token}</span>
       </div>
       <div class="tape-meta">
-        <div>${trade.time}</div>
+        <div>${displayTime(trade)}</div>
         <div style="font-size: 9px; color: var(--accent-lime);">${trade.wallet}</div>
       </div>
     </div>
@@ -227,7 +240,7 @@ function renderLeaderboard() {
         +${ag.pnl7d.toFixed(1)}%
       </td>
       <td style="font-family: var(--font-mono); font-weight: 700;">
-        ${ag.winRate}%
+        ${ag.tradesCount === 0 ? '<span style="color: var(--text-muted);">—</span>' : ag.winRate + '%'}
       </td>
       <td style="font-family: var(--font-mono); font-weight: 700; color: #fff;">
         $${ag.equityUsd.toLocaleString()}
@@ -415,7 +428,7 @@ function setupEventListeners() {
         pnl24h: 0.0,
         pnl7d: 0.0,
         pnlAll: 0.0,
-        winRate: 100,
+        winRate: 0,
         drawdown: 0.0,
         tradesCount: 0,
         status: "Running Autonomous Loop",
@@ -436,6 +449,7 @@ function setupEventListeners() {
         agentAvatar: newAgent.avatar,
         strategy: newAgent.strategy,
         time: "Just now",
+        ts: Date.now(),
         tokenSymbol: "RBH",
         action: "INITIALIZED",
         usdValue: null,
@@ -497,6 +511,7 @@ function setupEventListeners() {
           usdValue: usdValue,
           wallet: state.walletAddress,
           time: "Just now",
+          ts: Date.now(),
           hash: fakeHash.slice(0, 10) + '...'
         });
         renderCrossingTape();
@@ -513,6 +528,13 @@ function setupEventListeners() {
         document.querySelectorAll('.modal-backdrop').forEach(m => m.classList.remove('open'));
       }
     });
+  });
+
+  // Escape key closes any open modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-backdrop.open').forEach(m => m.classList.remove('open'));
+    }
   });
 }
 
@@ -569,6 +591,7 @@ function startNetworkSimulation() {
       usdValue: usdVal,
       wallet: fakeWallet,
       time: "Just now",
+      ts: Date.now(),
       hash: fakeHash
     });
 
@@ -596,6 +619,7 @@ function startNetworkSimulation() {
       agentAvatar: agent.avatar,
       strategy: agent.strategy,
       time: "Just now",
+      ts: Date.now(),
       tokenSymbol: token.symbol,
       action: "ANALYSIS",
       usdValue: Math.floor(Math.random() * 900 + 200),
@@ -608,6 +632,12 @@ function startNetworkSimulation() {
     if (state.pulsePosts.length > 30) state.pulsePosts.pop();
     renderPulseFeed();
   }, 14000);
+
+  // Age visible timestamps every 30 seconds ("Just now" -> "2m ago" ...)
+  setInterval(() => {
+    renderCrossingTape();
+    renderPulseFeed();
+  }, 30000);
 }
 
 // Wallet Modal Simulation
@@ -657,10 +687,15 @@ export function showToast(message, type = 'info') {
 window.inspectAgent = (handle) => {
   const ag = state.agents.find(a => a.handle === handle);
   if (ag) {
-    showToast(`Inspecting agent ${ag.name} (Wallet: ${ag.wallet})`, 'info');
+    const wr = ag.tradesCount === 0 ? 'no trades yet' : `${ag.winRate}% win rate`;
+    showToast(`${ag.name} (@${ag.handle}) — ${ag.strategy} on ${ag.brain}. Equity $${ag.equityUsd.toLocaleString()}, ${wr}, wallet ${ag.wallet || 'self-custodied'}.`, 'info');
   }
 };
 
 window.quickBuyLaunch = (symbol) => {
+  if (!state.walletConnected) {
+    openModal('wallet-modal');
+    return;
+  }
   showToast(`Prepared 0.1 ETH buy transaction on Robinhood Launchpad for $${symbol}!`, 'success');
 };

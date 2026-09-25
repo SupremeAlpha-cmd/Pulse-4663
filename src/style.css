@@ -313,8 +313,7 @@ header.top-header {
 .marquee-track {
   display: flex;
   align-items: center;
-  gap: 28px;
-  padding-left: 20px;
+  /* No gap/padding here: uniform margin on items keeps the -50% loop seamless */
   animation: marqueeScroll 45s linear infinite;
 }
 
@@ -331,6 +330,7 @@ header.top-header {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  margin-right: 28px;
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--text-main);
