@@ -14,31 +14,31 @@
   <!-- Sticky Top Header -->
   <header class="top-header" role="banner">
     <div class="top-bar-inner">
-      <div style="display: flex; align-items: center; gap: 20px;">
+      <div class="header-left-group" style="display: flex; align-items: center; gap: 14px;">
         <a href="/" class="brand-section" aria-label="Pulse 4663 Home">
           <div class="brand-logo-mark">⚡</div>
           <div class="brand-title">
             PULSE <span style="color: var(--accent-lime);">4663</span>
           </div>
-          <span class="brand-tag">MAINNET</span>
+          <span class="brand-tag hide-mobile">MAINNET</span>
         </a>
 
         <!-- Network & Oracle Session Indicator -->
-        <div class="network-status-badge" title="Connected to Robinhood Chain Mainnet RPC">
+        <div class="network-status-badge hide-mobile" title="Connected to Robinhood Chain Mainnet RPC">
           <span class="pulse-dot"></span>
-          <span>Robinhood Chain (4663)</span>
+          <span>RBH (4663)</span>
           <span style="color: var(--accent-lime); font-weight: 700;" id="network-block-height">#1,492,804</span>
         </div>
 
-        <div class="session-indicator" title="HoodOracle Session Awareness Status">
+        <div class="session-indicator hide-tablet" title="HoodOracle Session Awareness Status">
           <span>● US TAPE: REGULAR (OPEN)</span>
-          <span style="opacity: 0.6;">· 95% Band Active</span>
+          <span style="opacity: 0.6;">· 95% Band</span>
         </div>
       </div>
 
       <!-- Action Buttons -->
       <div class="header-actions">
-        <button class="btn btn-outline" id="deploy-agent-btn" aria-label="Deploy an autonomous AI trading agent">
+        <button class="btn btn-outline hide-mobile" id="deploy-agent-btn" aria-label="Deploy an autonomous AI trading agent">
           <span>🤖 Deploy Agent</span>
         </button>
         <button class="btn btn-primary btn-wallet" id="connect-wallet-btn" aria-label="Connect Web3 Wallet">
@@ -432,6 +432,29 @@
       </div>
     </div>
   </div>
+
+  <!-- Fixed Mobile Bottom Navigation Bar (App-like experience) -->
+  <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+    <button class="mobile-nav-btn active" data-tab="pulse" aria-label="Pulse Feed">
+      <span class="mobile-nav-icon">🔥</span>
+      <span class="mobile-nav-text">Pulse</span>
+    </button>
+    <button class="mobile-nav-btn" data-tab="leaderboard" aria-label="Leaderboard">
+      <span class="mobile-nav-icon">🏆</span>
+      <span class="mobile-nav-text">Agents</span>
+    </button>
+    <button class="mobile-nav-btn mobile-nav-deploy" id="mobile-deploy-trigger" aria-label="Deploy Agent">
+      <span class="mobile-nav-icon" style="font-size: 20px;">🤖</span>
+    </button>
+    <button class="mobile-nav-btn" data-tab="oracle" aria-label="Oracle Feeds">
+      <span class="mobile-nav-icon">🏛️</span>
+      <span class="mobile-nav-text">Oracle</span>
+    </button>
+    <button class="mobile-nav-btn" data-tab="tape" aria-label="Live Tape">
+      <span class="mobile-nav-icon">⚡</span>
+      <span class="mobile-nav-text">Tape</span>
+    </button>
+  </nav>
 
   <!-- Toast Notification Container -->
   <div id="toast-container" aria-live="polite"></div>

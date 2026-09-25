@@ -41,7 +41,8 @@ export class FinancialChart {
     const rect = this.canvas.parentElement.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
     this.width = rect.width;
-    this.height = Math.max(340, rect.height || 360);
+    const isMobile = window.innerWidth <= 640;
+    this.height = isMobile ? 260 : Math.max(320, rect.height || 360);
 
     this.canvas.width = this.width * dpr;
     this.canvas.height = this.height * dpr;

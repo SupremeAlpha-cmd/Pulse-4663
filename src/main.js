@@ -319,13 +319,21 @@ function renderLaunches() {
 
 // 9. Event Listeners Setup
 function setupEventListeners() {
-  // Navigation Tabs
-  document.querySelectorAll('.tab-btn').forEach(btn => {
+  // Navigation Tabs (Desktop & Mobile)
+  document.querySelectorAll('.tab-btn, .mobile-nav-btn[data-tab]').forEach(btn => {
     btn.addEventListener('click', () => {
       const tabId = btn.getAttribute('data-tab');
       switchTab(tabId);
     });
   });
+
+  // Mobile Floating Deploy Trigger
+  const mobileDeployTrigger = document.getElementById('mobile-deploy-trigger');
+  if (mobileDeployTrigger) {
+    mobileDeployTrigger.addEventListener('click', () => {
+      openModal('agent-modal');
+    });
+  }
 
   // Timeframe buttons
   document.querySelectorAll('.tf-btn').forEach(btn => {
@@ -507,7 +515,12 @@ function setupEventListeners() {
 // Tab Switcher
 function switchTab(tabId) {
   state.currentTab = tabId;
+  // Update desktop tabs
   document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId);
+  });
+  // Update mobile bottom nav items
+  document.querySelectorAll('.mobile-nav-btn[data-tab]').forEach(btn => {
     btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId);
   });
 

@@ -1144,3 +1144,294 @@ canvas#trading-chart {
 .toast.info {
   border-color: rgba(56, 189, 248, 0.4);
 }
+
+/* ==========================================================================
+   Mobile Bottom Navigation Bar (fomoX & AgentsHood style)
+   ========================================================================== */
+
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(7, 8, 11, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border-hairline);
+  z-index: 100;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 10px calc(env(safe-area-inset-bottom, 0px));
+}
+
+.mobile-nav-btn {
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px 12px;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+.mobile-nav-btn:hover, .mobile-nav-btn.active {
+  color: #fff;
+}
+
+.mobile-nav-btn.active .mobile-nav-icon {
+  transform: translateY(-2px);
+}
+
+.mobile-nav-btn.active .mobile-nav-text {
+  color: var(--accent-lime);
+  font-weight: 700;
+}
+
+.mobile-nav-icon {
+  font-size: 18px;
+  line-height: 1;
+  transition: transform var(--transition-fast);
+}
+
+.mobile-nav-text {
+  font-size: 10px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+}
+
+.mobile-nav-deploy {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent-lime);
+  color: #07080b !important;
+  box-shadow: 0 0 16px rgba(212, 252, 80, 0.35);
+  margin-top: -14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.mobile-nav-deploy:hover {
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   Responsive Overrides & Media Queries
+   ========================================================================== */
+
+/* Tablet & Mobile Breakpoints */
+@media (max-width: 1024px) {
+  .hide-tablet {
+    display: none !important;
+  }
+
+  .app-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  /* Ensure the trading terminal and chart appear first */
+  .grid-col-center {
+    order: 1;
+  }
+
+  .grid-col-left {
+    order: 2;
+  }
+
+  .grid-col-right {
+    order: 3;
+  }
+}
+
+/* Mobile Devices (<= 768px) */
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none !important;
+  }
+
+  body {
+    padding-bottom: 74px; /* Room for fixed bottom nav */
+  }
+
+  .mobile-bottom-nav {
+    display: flex;
+  }
+
+  .top-bar-inner {
+    padding: 0 1rem;
+    height: 58px;
+    gap: 0.75rem;
+  }
+
+  .brand-title {
+    font-size: 17px;
+  }
+
+  .brand-logo-mark {
+    width: 28px;
+    height: 28px;
+    font-size: 15px;
+    border-radius: 7px;
+  }
+
+  .btn-wallet {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
+  /* Make Main App Padding Compact */
+  main.app-shell {
+    padding: 0.85rem 0.65rem 5rem 0.65rem;
+  }
+
+  /* Smooth Horizontal Scroll for Tabs */
+  .view-tabs-bar {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-hairline);
+    padding-bottom: 4px;
+  }
+
+  .tabs-group {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 6px;
+    gap: 6px;
+  }
+
+  .tabs-group::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  /* Terminal Header on Mobile */
+  .terminal-header {
+    padding: 12px 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .active-pair-summary {
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .pair-title {
+    font-size: 17px;
+  }
+
+  .pair-price-tag {
+    font-size: 18px;
+  }
+
+  .chart-wrapper {
+    height: 280px;
+  }
+
+  /* Quick Swap Stack on Mobile */
+  .quick-swap-container {
+    padding: 14px;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .quick-swap-container > div:last-child {
+    grid-column: span 1;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #execute-swap-btn {
+    width: 100%;
+    padding: 14px;
+  }
+
+  /* Crossing Tape Stream Height */
+  .tape-stream {
+    max-height: 380px;
+  }
+
+  .tape-row {
+    padding: 10px 12px;
+    grid-template-columns: 50px 1fr 75px;
+    font-size: 11px;
+  }
+
+  /* Modals on Mobile */
+  .modal-dialog {
+    max-width: 94vw;
+    margin: 10px auto;
+    max-height: 88vh;
+    border-radius: 18px;
+  }
+
+  .modal-header {
+    padding: 16px 18px;
+  }
+
+  .modal-body {
+    padding: 16px 18px;
+  }
+
+  #toast-container {
+    bottom: 76px; /* Above mobile bottom bar */
+    right: 12px;
+    left: 12px;
+  }
+
+  .toast {
+    max-width: 100%;
+  }
+
+  /* Horizontal Table Scroll Indicator */
+  .data-table th, .data-table td {
+    padding: 10px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+}
+
+/* Small Screens (<= 400px) */
+@media (max-width: 400px) {
+  .pair-title {
+    font-size: 15px;
+  }
+
+  .pair-price-tag {
+    font-size: 16px;
+  }
+
+  .chart-wrapper {
+    height: 250px;
+  }
+
+  .timeframe-selector {
+    gap: 2px;
+    padding: 2px;
+  }
+
+  .tf-btn {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+}
