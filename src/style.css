@@ -277,6 +277,20 @@ header.top-header {
   display: flex;
   align-items: center;
   white-space: nowrap;
+  position: relative;
+}
+
+/* News-style edge fade: incoming tape fades in from transparent */
+.ticker-marquee-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 120px;
+  background: linear-gradient(to left, var(--bg-panel) 10%, transparent);
+  pointer-events: none;
+  z-index: 3;
 }
 
 .ticker-label {
@@ -1434,27 +1448,4 @@ canvas#trading-chart {
     padding: 3px 6px;
     font-size: 10px;
   }
-}
-
-/* Demo disclaimer ribbon */
-.demo-disclaimer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 8px 16px;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-align: center;
-  color: rgba(212, 252, 80, 0.85);
-  background: rgba(212, 252, 80, 0.06);
-  border-bottom: 1px solid rgba(212, 252, 80, 0.15);
-}
-.demo-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-lime);
-  flex-shrink: 0;
 }

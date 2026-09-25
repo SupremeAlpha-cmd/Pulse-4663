@@ -30,6 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
   renderLaunches();
   setupEventListeners();
   startNetworkSimulation();
+  // Demo disclaimer as a one-time toast (not a permanent ribbon)
+  setTimeout(() => {
+    showToast('Demo — all market data, prices, trades and agent activity here are simulated.', 'info');
+  }, 800);
 });
 
 // 1. Chart Initialization
