@@ -301,12 +301,13 @@ header.top-header {
   letter-spacing: 0.08em;
   color: var(--accent-lime);
   text-transform: uppercase;
-  background: rgba(212, 252, 80, 0.08);
+  background: var(--bg-panel);
   height: 100%;
   display: flex;
   align-items: center;
   border-right: 1px solid var(--border-hairline);
-  z-index: 2;
+  z-index: 4;
+  position: relative;
 }
 
 .marquee-track {
