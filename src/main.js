@@ -484,7 +484,7 @@ function setupEventListeners() {
         execSwapBtn.disabled = false;
         execSwapBtn.innerHTML = `<span>Instant Swap (${state.activeToken.symbol})</span>`;
 
-        const outTokens = parseFloat(swapOut.value) || 125000;
+        const outTokens = parseFloat(swapOut.value.replace(/,/g, '')) || 125000;
         const usdValue = inVal * 3450;
         const fakeHash = "0x" + Array.from({length: 64}, () => Math.floor(Math.random()*16).toString(16)).join('');
 
