@@ -145,6 +145,10 @@ function updateActiveTokenHeader() {
     pairAddress.title = state.activeToken.address;
   }
   if (swapTokenOut) swapTokenOut.textContent = state.activeToken.symbol;
+
+  // Re-quote the swap for the newly selected token's price
+  const swapIn = document.getElementById('swap-in-amount');
+  if (swapIn) swapIn.dispatchEvent(new Event('input'));
 }
 
 // 4. Render Agent Pulse Feed
